@@ -1,7 +1,7 @@
 const express =require( "express");
 const Jurnal=require('../models/JurnalModel')
 
-//method get (get all travel books)
+//method get (get all jurnals)
 const getAllJurnals=async (req, res)=>{
     try{
         const jurnals=await Jurnal.findAll();
@@ -16,7 +16,7 @@ const getAllJurnals=async (req, res)=>{
     }
 }
 
-//get travel book by one by
+//get jurnals  by one by
 const getJurnalById =async (req, res)=>{
     try{
       //  const jurnals= await Jurnal.findOne(req.params.id)
@@ -42,7 +42,7 @@ const getJurnalById =async (req, res)=>{
     }
 }
 
-// POST add new travel book
+// POST add new jurnals
 const addJurnal = async (req, res)=>{
  //   const {title, price, createdAt, updatedAt}=req.body;
     const title=req.body.title;
