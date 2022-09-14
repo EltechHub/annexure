@@ -3,7 +3,7 @@ const {Sequelize} =require("sequelize");
 const connection=require('../config/database');
 
 
-const sequelize = new Sequelize('shirinmeva', 'admin', '0000', {
+const sequelize = new Sequelize('shirinmeva', 'root', '', {
     host: 'localhost',
     dialect: 'mysql'
 });
@@ -12,22 +12,32 @@ const Jurnal = sequelize.define('product', {
     title: {
         type: Sequelize.STRING,
     },
-    price: {
-        type: Sequelize.DOUBLE
+    text: {
+        type: Sequelize.STRING
     },
-    createdAt:{
-        type:Sequelize.DATE,
+    date:{
+        type:Sequelize.STRING,
     },
-    updatedAt:{
-        type:Sequelize.DATE
+    status:{
+        type:Sequelize.STRING
+    },
+    author:{
+        type:Sequelize.STRING
+    },
+    img:{
+        type:Sequelize.STRING
+    },
+    order_number:{
+        type:Sequelize.STRING
     }
+
 }, {
     timestamps: false
 });
 
-Jurnal.findAll().then(jurnals => {
+/*Jurnal.findAll().then(jurnals => {
     console.log("All jurnals:", JSON.stringify(jurnals, null, 4));
-});
+});*/
 
 module.exports=Jurnal;
 /*const Jurnal = (sequelize, Sequelize) => {

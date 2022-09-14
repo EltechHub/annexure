@@ -1,14 +1,14 @@
 const express =require( "express");
 const Jurnal=require('../models/JurnalModel')
 
-//method get (get all jurnals)
+//method get (get all travel books)
 const getAllJurnals=async (req, res)=>{
     try{
         const jurnals=await Jurnal.findAll();
 
         res.status(200).json({
             message:'success',
-            jurnals:jurnals
+            jurnals:jurnals.reverse()
         })
     }catch(err)
     {
@@ -16,7 +16,7 @@ const getAllJurnals=async (req, res)=>{
     }
 }
 
-//get jurnals  by one by
+//get travel book by one by
 const getJurnalById =async (req, res)=>{
     try{
       //  const jurnals= await Jurnal.findOne(req.params.id)
@@ -42,16 +42,19 @@ const getJurnalById =async (req, res)=>{
     }
 }
 
-// POST add new jurnals
+// POST add new travel book
 const addJurnal = async (req, res)=>{
- //   const {title, price, createdAt, updatedAt}=req.body;
+ //   const {title, text, date, status, author, img, order_number}=req.body;
     const title=req.body.title;
-    const price=req.body.price;
-    const createdAt=req.body.createdAt;
-    const updatedAt=req.body.updatedAt;
+    const text=req.body.text;
+    const date=req.body.date;
+    const status=req.body.status;
+    const author=req.body.author;
+    const img=req.body.img;
+    const order_number=req.body.order_number;
 
     try {
-       await Jurnal.create({title:title, price:price, createdAt:createdAt, updatedAt:updatedAt});
+       await Jurnal.create({title:title, text:text, date:date, status:status, author:author, img:img, order_number:order_number});
         res.status(201).json({msg: "Product Created Successfuly", Jurnal});
 
   /*      res.status(201).json({
@@ -67,12 +70,17 @@ const addJurnal = async (req, res)=>{
 
 const updateJurnal=async (req, res)=>{
     try {
-        const {title, price, createdAt, updatedAt}=req.body;
+        const {title, text, date, status, author, img, order_number}=req.body;
         const updateJurnal=await Jurnal.findOne({
             where:{
                 id : req.params.id,
                 title:title,
-                price:price
+                text:text,
+                date:date,
+                status:status,
+                author:author,
+                img:img,
+                order_number:order_number
             }
         });
         res.status(200).json({
@@ -87,11 +95,28 @@ const updateJurnal=async (req, res)=>{
 }
 //Delete method
 
+const deleteJurnal=async (req, res)=>{
+    try {
+
+       await Jurnal.destroy({
+            where:{
+                id : req.params.id
+            }
+        });
+        res.status(200).json({
+            message: 'deleted!',
+        })
+    }
+    catch (error){
+        console.log(error.message);
+    }
+}
 
 
 module.exports={
     getAllJurnals,
     getJurnalById,
     addJurnal,
-    updateJurnal
+    updateJurnal,
+    deleteJurnal
 }
