@@ -1,18 +1,8 @@
 const express =require( "express");
-//const connectDB=require('./config/db')
-const mysql = require("mysql");
 const axios =require( "axios");
 const cors = require("cors");/**/
-
 require('dotenv').config();
 
-//connect to Database
-const connection =mysql.createConnection({
-    user: 'admin',
-    host: 'localhost',
-    password: '0000',
-    database: 'shirinmeva',
-});
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded(
