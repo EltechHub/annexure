@@ -1,27 +1,71 @@
-const express =require( "express");
-const axios =require( "axios");
-const cors = require("cors");/**/
-require('dotenv').config();
+const express = require('express');
+const mysql = require('mysql');
+const cors = require('cors');
+const multer = require('multer');
 
-const app = express();
+const app = express ();
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'uploads');
+    },
+    filename: function (req, file, cb) {
+        console.log(file);
+        cb(null , file.originalname );
+    }
+});
+
+const upload = multer({ storage: storage })
+
+// Parse JSON
+
 app.use(express.json());
-app.use(express.urlencoded(
-    {extended:false}))
 
-// Add Access Control Allow Origin headers
-/*app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.header(
-        "Access-Control-Allow-Headers",
-        'Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS',
-        "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    next();
-});*/
+// Use CORS
 
-app.use(cors({
-    origin: '*'
-}));
+app.use(cors());
+
+// Serve Static Files
+
+//app.use(express.static('uploads'));
+
+app.use(express.static('public'));
+app.use(express.static('uploads'));
+
+const db =mysql.createConnection({
+    user: 'root',
+    host: 'localhost',
+    password: '',
+    database: 'shirinmeva',
+})
+
+app.get('/', (req,res) => {
+    let selectQuery = "SELECT * FROM products;";
+
+    db.query(selectQuery, (err, result, fields) => {
+        if (err) throw err;
+
+        res.send({
+            status: 200,
+            err: null,
+            result: result
+        })
+    })
+})
+app.post('/', upload.single('file'), (req,res) => {
+    let title = req.body.title;
+    let text = req.body.text;
+    let file ="http://localhost:7000/"+ req.file.filename;
+    let order_number = req.body.order_number;
+
+    let postQuery = "INSERT INTO products (title, text, file, order_number) VALUES ('" + title + "', '" + text + "', '" + file + "', '"+order_number+"');";
+    console.log(postQuery);
+    db.query(postQuery, (err,result,fields) => {
+        if (err) { throw err };
+
+        res.send('Response has been recorded...');
+    })
+})
 
 app.use('/api/jurnal', require('./routes/JurnalRoutes'))
 
@@ -32,8 +76,8 @@ app.listen(7000, console.log(`Port is listening on port: 7000`));
 
 
 /*
-app.get('/select', (req,res)=>{
-    connection.query('Select * from products', (err,result)=>{
+app.get('/', (req,res)=>{
+    db.query('Select * from shirinmeva', (err,result)=>{
             if(err){
                 console.log(err);
             }
@@ -43,7 +87,7 @@ app.get('/select', (req,res)=>{
 })
 
 app.get('/insert', (req,res)=>{
-   connection.query('INSERT INTO new_table (text) VALUES (21)', (err,result)=>{
+   connection.query('INSERT INTO products (title, text, img, date, status, author, order_number) VALUES ()', (err,result)=>{
        if(err){
            console.log(err);
        }

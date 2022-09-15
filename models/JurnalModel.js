@@ -1,7 +1,6 @@
 const {Sequelize} =require("sequelize");
 const db =require("../config/database");
 
-
 const Jurnal = db.define('product', {
     title: {
         type: Sequelize.STRING,
@@ -9,16 +8,7 @@ const Jurnal = db.define('product', {
     text: {
         type: Sequelize.STRING
     },
-    date:{
-        type:Sequelize.STRING,
-    },
-    status:{
-        type:Sequelize.STRING
-    },
-    author:{
-        type:Sequelize.STRING
-    },
-    img:{
+    file:{
         type:Sequelize.STRING
     },
     order_number:{
@@ -30,3 +20,4 @@ const Jurnal = db.define('product', {
 });
 
 module.exports=Jurnal;
+

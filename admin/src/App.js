@@ -4,6 +4,7 @@ import Main from "./pages/main";
 import AddJurnal from "./pages/AddJurnal";
 import UpdateJurnal from "./pages/UpdateJurnal";
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

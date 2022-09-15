@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 import Carousel from 'react-bootstrap/Carousel';
 
 
-
 const Slider=()=>{
     const [jurnal, setJurnal]=useState([]);
     const [id, setId]=useState('')
@@ -20,12 +19,11 @@ const Slider=()=>{
         <div>
             {jurnal.map(jur=>(
                 <div key={jur.id}>
-        <Carousel>
-
-            <Carousel.Item>
+        <Carousel activeIndex={id} onSelect={fetchData} fade>
+            <Carousel.Item interval={1000}>
                 <img
                     className="d-block w-100"
-                    src={jur.img}
+                    src={jur.file}
                     alt={jur.title}
                 />
                 <Carousel.Caption>

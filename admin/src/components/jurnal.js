@@ -26,7 +26,7 @@ const Jurnal=()=>{
         <div>
             {jurnal.map(jur=>(
                <div key={jur.id} className="card mb-3 mt-3">
-                <img src={jur.img} className="card-img-top" alt={jur.title} />
+                <img src={jur.file} className="card-img-top" alt={jur.title} />
                 <div className="card-body">
                     <h5 className="card-title">{jur.title}</h5>
                     <p className="card-text">{jur.text}</p>
