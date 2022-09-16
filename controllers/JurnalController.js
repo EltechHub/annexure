@@ -17,10 +17,17 @@ const getAllJurnals=async (req, res)=>{
         res.send(err);
     }
 }
+//get pinned sliders
 const getPinnedJurnals=async (req, res)=>{
     try {
-        const jurnals=await Jurnal.findAll({where:{pinned:true}})
-        res.status(200).send(jurnals);
+        const jurnals=await Jurnal.findAll({
+            where:{
+                pin:true
+            }})
+        res.status(200).json({
+            message: 'pin sliders',
+            jurnals:jurnals
+        })
     }catch (err){
         res.send(err);
     }
