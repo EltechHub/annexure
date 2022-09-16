@@ -30,13 +30,13 @@ const upload = multer({
 
 
 //CRUD
-router.get('/', getAllJurnals)
+router.get('/all', getAllJurnals)
 
 //get one by id
 router.get('/:id', getJurnalById)
 
 //get Pinned banners
-router.get('/pinned', getPinnedJurnals)
+router.get('/', getPinnedJurnals)
 
 //create
 router.post('/add', upload.single("file"), addJurnal)
