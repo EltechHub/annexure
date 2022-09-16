@@ -20,7 +20,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:7000/api/jurnal",
+  "proxy": "http://localhost:7000/",
+  "secure": false,
   "eslintConfig": {
     "extends": [
       "react-app",

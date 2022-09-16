@@ -23,23 +23,24 @@ const Jurnal=()=>{
         fetchData()
     }, [])
     return(
-        <div>
-            {jurnal.map(jur=>(
+        <div className="row">
+
+            {jurnal.map(jur=>(<div className="col-sm-6">
                <div key={jur.id} className="card mb-3 mt-3">
                 <img src={jur.file} className="card-img-top" alt={jur.title} />
                 <div className="card-body">
                     <h5 className="card-title">{jur.title}</h5>
                     <p className="card-text">{jur.text}</p>
+                    <p className="card-text">{jur.pin ? (<small>True</small>):(<small>False</small>)}</p>
                     <div className='d-flex justify-content-start'>
                         <Link className="btn btn-primary" to={`/update/${jur.id}`}>Update</Link>
                         <form onSubmit={deleteHandler}>
                         <button type="submit" className="btn btn-danger mx-2" onClick={()=>setId(jur.id)}>Delete </button>
                     </form>
                     </div>
-
-
                 </div>
-            </div>
+
+            </div></div>
             ))}
         </div>
     )}

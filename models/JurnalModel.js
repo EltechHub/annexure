@@ -1,4 +1,4 @@
-const {Sequelize} =require("sequelize");
+const {Sequelize, DataTypes} =require("sequelize");
 const db =require("../config/database");
 
 const Jurnal = db.define('product', {
@@ -11,8 +11,8 @@ const Jurnal = db.define('product', {
     file:{
         type:Sequelize.STRING
     },
-    order_number:{
-        type:Sequelize.STRING
+    pin:{
+        type:DataTypes.BOOLEAN
     }
 
 }, {

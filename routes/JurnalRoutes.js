@@ -1,7 +1,7 @@
 const {Router}=require('express');
 const router=Router();
 const multer = require('multer')
-const {getAllJurnals, getJurnalById, addJurnal, updateJurnal, deleteJurnal}=require('../controllers/JurnalController');
+const {getAllJurnals, getJurnalById, getPinnedJurnals, addJurnal, updateJurnal, deleteJurnal}=require('../controllers/JurnalController');
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, './uploads/');
@@ -34,6 +34,9 @@ router.get('/', getAllJurnals)
 
 //get one by id
 router.get('/:id', getJurnalById)
+
+//get Pinned banners
+router.get('/pinned', getPinnedJurnals)
 
 //create
 router.post('/add', upload.single("file"), addJurnal)

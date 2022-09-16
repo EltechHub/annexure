@@ -1,8 +1,9 @@
 const express = require('express');
+var bodyParser = require('body-parser');
 const mysql = require('mysql');
 const cors = require('cors');
 const multer = require('multer');
-
+var router = express.Router();
 const app = express ();
 
 const storage = multer.diskStorage({
@@ -16,7 +17,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage })
-
+app.use(bodyParser.urlencoded({ extended: false }));
 // Parse JSON
 
 app.use(express.json());
@@ -24,12 +25,15 @@ app.use(express.json());
 // Use CORS
 
 app.use(cors());
+router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    next();
+});
 
 // Serve Static Files
 
-//app.use(express.static('uploads'));
-
-app.use(express.static('public'));
 app.use(express.static('uploads'));
 
 const db =mysql.createConnection({
@@ -56,9 +60,9 @@ app.post('/', upload.single('file'), (req,res) => {
     let title = req.body.title;
     let text = req.body.text;
     let file ="http://localhost:7000/"+ req.file.filename;
-    let order_number = req.body.order_number;
+    let pin = req.body.pin ? req.body.pin:false;
 
-    let postQuery = "INSERT INTO products (title, text, file, order_number) VALUES ('" + title + "', '" + text + "', '" + file + "', '"+order_number+"');";
+    let postQuery = "INSERT INTO products (title, text, file, pin) VALUES ('" + title + "', '" + text + "', '" + file + "', '"+pin+"');";
     console.log(postQuery);
     db.query(postQuery, (err,result,fields) => {
         if (err) { throw err };
@@ -71,28 +75,3 @@ app.use('/api/jurnal', require('./routes/JurnalRoutes'))
 
 const PORT= process.env.PORT || 7000;
 app.listen(7000, console.log(`Port is listening on port: 7000`));
-
-
-
-
-/*
-app.get('/', (req,res)=>{
-    db.query('Select * from shirinmeva', (err,result)=>{
-            if(err){
-                console.log(err);
-            }
-            res.send(result);
-        }
-    )
-})
-
-app.get('/insert', (req,res)=>{
-   connection.query('INSERT INTO products (title, text, img, date, status, author, order_number) VALUES ()', (err,result)=>{
-       if(err){
-           console.log(err);
-       }
-       res.send(result);
-       }
-       )
-})*/
-

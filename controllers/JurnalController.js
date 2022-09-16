@@ -17,6 +17,14 @@ const getAllJurnals=async (req, res)=>{
         res.send(err);
     }
 }
+const getPinnedJurnals=async (req, res)=>{
+    try {
+        const jurnals=await Jurnal.findAll({where:{pinned:true}})
+        res.status(200).send(jurnals);
+    }catch (err){
+        res.send(err);
+    }
+}
 
 //get travel book by one by
 const getJurnalById =async (req, res)=>{
@@ -44,14 +52,14 @@ const getJurnalById =async (req, res)=>{
 // POST add new travel book
 const addJurnal = async (req, res)=>{
     console.log(req.file)
- //   const {title, text, file, order_number}=req.body;
+ //   const {title, text, file, pin}=req.body;
     const title=req.body.title;
     const text=req.body.text;
     const file=req.files.file;
-    const order_number=req.body.order_number;
+    const pin=req.body.pin;
 
     try {
-       await Jurnal.create({title:title, text:text, file:file, order_number:order_number});
+       await Jurnal.create({title:title, text:text, file:file, pin:pin});
         res.status(201).json({msg: "Product Created Successfuly", Jurnal});
     }catch (error) {
         console.log(error.message);
@@ -61,14 +69,14 @@ const addJurnal = async (req, res)=>{
 //PUT method edit
 const updateJurnal=async (req, res)=>{
     try {
-        const {title, text, date, status, author, file, order_number}=req.body;
+        const {title, text, date, status, author, file, pin}=req.body;
         const updateJurnal=await Jurnal.findOne({
             where:{
                 id : req.params.id,
                 title:title,
                 text:text,
                 file:file,
-                order_number:order_number
+                pin:pin
             }
         });
         res.status(200).json({
@@ -100,6 +108,7 @@ const deleteJurnal=async (req, res)=>{
 
 module.exports={
     getAllJurnals,
+    getPinnedJurnals,
     getJurnalById,
     addJurnal,
     updateJurnal,

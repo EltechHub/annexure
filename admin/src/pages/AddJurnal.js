@@ -6,14 +6,14 @@ class AddJurnal extends Component {
         title: '',
         text: '',
         file: null,
-        order_number: ''
+        pin: ''
     }
 
     handleChange = (event) => {
         this.setState({
             title: document.getElementById('title').value,
             text: document.getElementById('text').value,
-            order_number: document.getElementById('order_number').value
+            pin: document.getElementById('pin').value
         })
     }
 
@@ -35,7 +35,7 @@ class AddJurnal extends Component {
         formData.append('title', this.state.title);
         formData.append('text', this.state.text);
         formData.append('file', this.state.file);
-        formData.append('order_number', this.state.order_number);
+        formData.append('pin', this.state.pin);
 
         const config = {
             headers: { 'content-type': 'multipart/form-data' }
@@ -46,7 +46,9 @@ class AddJurnal extends Component {
                 console.log(res.data);
                 console.log(this.state.filename);
                 console.log(formData);
+
             })
+
     }
 
     render () {
@@ -63,8 +65,8 @@ class AddJurnal extends Component {
                         <input type="text" className="form-control" id="text" name="text" onChange={this.handleChange}/>
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="order" className="form-label">Order</label>
-                        <input type="number" className="form-control" id="order_number" name="order" onChange={this.handleChange}/>
+                        <label htmlFor="pin" className="form-label">Pin/Unpin</label>
+                        <input type="number" className="form-control" id="pin" name="pin" onChange={this.handleChange}/>
                     </div>
 
                         <div className="mb-3">
